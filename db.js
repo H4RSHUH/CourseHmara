@@ -2,7 +2,7 @@ const mongoose= require("mongoose")
 const Schema= mongoose.mongoose.Schema
 const ObjectId= Schema.ObjectId;
 
-mongoose.connect("mongodb+srv://Harsh:1K4ArTXzC2uLIdyV@cluster0.ecrggbn.mongodb.net/course-hmara")
+mongoose.connect(process.env.MONGO_URL)
 const user= new Schema({
     email: {type: String, unique: true},
     password: String,

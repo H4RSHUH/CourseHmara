@@ -19,7 +19,6 @@ app.use("/admin",adminRouter)
 
 
 async function main(){
-    // await mongoose.connect("mongodb+srv://Harsh:1K4ArTXzC2uLIdyV@cluster0.ecrggbn.mongodb.net/course-hmara")
     await mongoose.connect(process.env.MONGO_URL)
 
 app.listen(3000)
