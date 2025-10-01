@@ -1,5 +1,5 @@
 const jwt= require("jsonwebtoken");
-const { use } = require("react");
+
 const USER_SECRET= "pikachu"
 
 function userMiddleware(req,res,next){

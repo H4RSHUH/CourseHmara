@@ -1,11 +1,13 @@
 const express= require("express")
 const router= express.Router;
- const {userModel} = require("../db")
+ const {userModel, courseModel, purchaseModel} = require("../db")
 const userRouter= router()
 const jwt= require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const { z }= require("zod")// for input validation
 const USER_SECRET="pikachu"
+
+const {userMiddleware}= require("../middleware/user")
 
 userRouter.post("/signup",async (req,res)=>{
     const requiredData=z.object({
@@ -76,9 +78,19 @@ userRouter.post("/login",async (req,res)=>{
     }
 
 })
-userRouter.get("/purchases", (req,res)=>{
+userRouter.get("/purchases",userMiddleware,async (req,res)=>{
+
+    const userId= req.userId
+    const purchase = await purchaseModel.find({
+        userId
+    })
+
+    const course= await courseModel.find({
+        _id: { $in: purchase.map(x=>x.courseId) }
+    })
 res.json({
-        msg: "Hello ji"
+        purchase,
+        course
     })
 })
 
